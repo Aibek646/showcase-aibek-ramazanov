@@ -1,0 +1,1 @@
+export { addName } from "./HomeScreen";

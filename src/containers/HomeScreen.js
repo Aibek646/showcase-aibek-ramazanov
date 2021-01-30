@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import actions from "../store/actions/index";
+import { connect } from "react-redux";
 
 class HomeScreen extends Component {
   state = {
@@ -8,12 +10,7 @@ class HomeScreen extends Component {
 
   onNameEntered = (e) => {
     this.setState({ name: e.target.value });
-    console.log(this.props);
-    const queryParams = e.target.value;
-    this.props.history.push({
-      path: "/mainscreen",
-      search: ,
-    });
+    this.props.onTypedName(e.target.value);
   };
 
   render() {
@@ -28,4 +25,16 @@ class HomeScreen extends Component {
   }
 }
 
-export default HomeScreen;
+const mapStateToProps = (state) => {
+  return {
+    name: state.homeScreen.name,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTypedName: (name) => dispatch(actions.addName(name)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

@@ -3,11 +3,11 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { Provider } from "react-redux";
-import { createdStore, applyMiddleware, compose, combineReducers } from "redux";
+import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
 import HomeScreenReducer from "./store/reducers/HomeScreen";
 import MainScreenReducer from "./store/reducers/MainScreen";
+import { BrowserRouter } from "react-router-dom";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -16,12 +16,14 @@ const rootReducer = combineReducers({
   mainScreen: MainScreenReducer,
 });
 
-const store = createdStore(rootReducer, composeEnhancers);
+const store = createStore(rootReducer);
 
 ReactDOM.render(
-  <BrowserRouter store={store}>
-    <App />
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById("root")
 );
 
