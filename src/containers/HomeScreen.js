@@ -12,7 +12,7 @@ class HomeScreen extends Component {
     const queryParams = e.target.value;
     this.props.history.push({
       path: "/mainscreen",
-      search: "",
+      search: ,
     });
   };
 
