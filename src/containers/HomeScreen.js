@@ -23,16 +23,10 @@ class HomeScreen extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    name: state.homeScreen.name,
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     onTypedName: (name) => dispatch(actions.addName(name)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default connect(null, mapDispatchToProps)(HomeScreen);
