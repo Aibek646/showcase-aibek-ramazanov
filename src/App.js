@@ -1,7 +1,7 @@
 import "./App.css";
 import HomeScreen from "./containers/HomeScreen";
 import { Route, Switch } from "react-router-dom";
-import MainScreen from "./containers/HomeScreen";
+import MainScreen from "./containers/MainScreen";
 
 function App() {
   return (

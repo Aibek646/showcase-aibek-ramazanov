@@ -8,6 +8,12 @@ class HomeScreen extends Component {
 
   onNameEntered = (e) => {
     this.setState({ name: e.target.value });
+    console.log(this.props);
+    const queryParams = e.target.value;
+    this.props.history.push({
+      path: "/mainscreen",
+      search: "",
+    });
   };
 
   render() {
