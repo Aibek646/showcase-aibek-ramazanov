@@ -8,16 +8,16 @@ class MainScreen extends Component {
     text: "",
   };
 
+  componentDidMount() {}
+
   onTextChanged = (e) => {
     const value = e.target.value;
-    let updatedArray = this.state.suggestion;
+    let updatedArray = [];
     if (value.length > 0) {
       const regex = new RegExp(`^${value}`, "i");
       updatedArray = this.state.universities
         .sort()
         .filter((v) => regex.test(v));
-    } else if (value.length <= 0) {
-      return this.setState({ suggestion: [] });
     }
 
     this.setState({
@@ -41,7 +41,9 @@ class MainScreen extends Component {
     return (
       <ul>
         {suggestion.map((univer) => (
-          <li>{univer}</li>
+          <li key={univer} onClick={() => this.suggestionSelected(univer)}>
+            {univer}
+          </li>
         ))}
       </ul>
     );
