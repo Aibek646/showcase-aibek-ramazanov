@@ -1,1 +1,1 @@
-export { addName } from "./HomeScreen";
+export { addName } from "./homeScreen";
