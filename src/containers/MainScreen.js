@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { DebounceInput } from "react-debounce-input";
 import { compose } from "redux";
+import Modal from "../components/UI/Modal";
 
 class MainScreen extends Component {
   state = {
@@ -10,6 +11,7 @@ class MainScreen extends Component {
     suggestion: [],
     text: "",
     message: "",
+    modal: false,
     orderForm: {
       degree: {
         elementType: "input",
@@ -72,7 +74,7 @@ class MainScreen extends Component {
       .catch((err) => console.log(err));
   };
 
-  onTextChanged = (e) => {
+  onAutoTextChanged = (e) => {
     // const value = e.target.value;
     // let updatedArray = [];
     // if (value.length > 0) {
@@ -115,6 +117,24 @@ class MainScreen extends Component {
     );
   };
 
+  onInputChanged = (e, inputIdentity) => {
+    const updatedOrderForm = {
+      ...this.state.orderForm,
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentity],
+    };
+    updatedFormElement.value = e.target.value;
+    updatedOrderForm[inputIdentity] = updatedFormElement;
+    this.setState({
+      orderForm: updatedOrderForm,
+    });
+  };
+
+  openAndCloseModal = () => {
+    this.setState({ modal: !this.state.modal });
+  };
+
   render() {
     const { text } = this.state;
     const formElementsArray = [];
@@ -132,6 +152,7 @@ class MainScreen extends Component {
             key={formElement.id}
             type={formElement.config.elementType}
             value={formElement.config.value}
+            onChange={(event) => this.onInputChanged(event, formElement.id)}
           />
         ))}
       </form>
@@ -140,15 +161,16 @@ class MainScreen extends Component {
     return (
       <div>
         <h1>Welcome {this.props.name} to educational page</h1>
-        <button>Add new education</button>
+        <button onClick={this.openAndCloseModal}>Add new education</button>
+
         <br />
         <DebounceInput
           debounceTimeout={500}
           type="text"
           value={text}
-          onChange={this.onTextChanged}
+          onChange={this.onAutoTextChanged}
         />
-        {input}
+        <div>{input}</div>
 
         <div>{this.renderSuggestions()}</div>
       </div>
