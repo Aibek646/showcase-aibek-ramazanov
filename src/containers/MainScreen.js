@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
+import { compose } from "redux";
 
 class MainScreen extends Component {
   state = {
@@ -8,7 +10,15 @@ class MainScreen extends Component {
     text: "",
   };
 
-  componentDidMount() {}
+  fetchUniversities = (name, country) => {
+    const searchURL = `http://universities.hipolabs.com/search?name=${name}&${country}.json`;
+    axios
+      .get(searchURL)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   onTextChanged = (e) => {
     const value = e.target.value;
