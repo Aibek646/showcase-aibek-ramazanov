@@ -1,0 +1,25 @@
+.modal-btn {
+  position: absolute;
+  padding: 4px;
+  right: 10px;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-form input {
+  padding: 10px;
+  width: 30%;
+  margin: 10px;
+}
+
+.modal-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+}

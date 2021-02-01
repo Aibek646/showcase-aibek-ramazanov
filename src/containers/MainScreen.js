@@ -4,6 +4,7 @@ import axios from "axios";
 import { DebounceInput } from "react-debounce-input";
 import { compose } from "redux";
 import Modal from "../components/UI/Modal";
+import "./MainScreen.css";
 
 class MainScreen extends Component {
   state = {
@@ -65,17 +66,6 @@ class MainScreen extends Component {
     },
   };
 
-  // onTextChanged = (e) => {
-  //   const value = e.target.value;
-  //   let updatedArray = [];
-  //   const regex = new RegExp(`^${value}`, "i");
-  //   updatedArray = this.state.universities.sort().filter((v) => regex.test(v));
-  //   this.setState({
-  //     suggestion: updatedArray,
-  //     text: value,
-  //   });
-  // };
-
   fetchUniversities = (name) => {
     const searchURL = `http://universities.hipolabs.com/search?name=${name}`;
     axios
@@ -100,20 +90,6 @@ class MainScreen extends Component {
   };
 
   onAutoTextChanged = (e) => {
-    // const value = e.target.value;
-    // let updatedArray = [];
-    // if (value.length > 0) {
-    //   const regex = new RegExp(`^${value}`, "i");
-    //   updatedArray = this.state.universities
-    //     .sort()
-    //     .filter((v) => regex.test(v));
-    // }
-
-    // this.setState({
-    //   suggestion: updatedArray,
-    //   text: value,
-    // });
-
     if (!e.target.value) {
       this.setState({
         text: e.target.value,
@@ -187,7 +163,7 @@ class MainScreen extends Component {
     const { text } = this.state;
 
     return (
-      <div>
+      <div className="container">
         <h1>Welcome {this.props.name} to educational page</h1>
         <button onClick={this.openAndCloseModal}>Add new education</button>
 
@@ -200,6 +176,8 @@ class MainScreen extends Component {
         />
 
         <Modal
+          text={this.state.text}
+          renderSuggestion2={this.renderSuggestion2}
           orderForm={this.state.orderForm}
           open={this.state.modal}
           close={this.openAndCloseModal}
