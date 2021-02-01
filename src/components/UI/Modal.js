@@ -3,9 +3,29 @@ import Modal from "react-modal";
 Modal.setAppElement("#root");
 
 const modal = (props) => {
+  const formElementsArray = [];
+
+  for (let key in props.orderForm) {
+    formElementsArray.push({
+      id: key,
+      config: props.orderForm[key],
+    });
+  }
+  let input = (
+    <form>
+      {formElementsArray.map((formElement) => (
+        <input
+          key={formElement.id}
+          type={formElement.config.elementType}
+          value={formElement.config.value}
+          onChange={(event) => props.onChanged(event, formElement.id)}
+        />
+      ))}
+    </form>
+  );
   return (
     <Modal
-      isOpen={this.state.modal}
+      isOpen={props.open}
       style={{
         overlay: {
           backgroundColor: "grey",
@@ -20,7 +40,8 @@ const modal = (props) => {
       }}
     >
       <h1>Modal title</h1>
-      <button onClick={this.openAndCloseModal}>Close</button>
+      <button onClick={props.close}>Close</button>
+      {input}
     </Modal>
   );
 };

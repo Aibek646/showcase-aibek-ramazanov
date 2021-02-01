@@ -11,6 +11,7 @@ class MainScreen extends Component {
     suggestion: [],
     text: "",
     message: "",
+    loading: false,
     modal: false,
     orderForm: {
       degree: {
@@ -64,12 +65,27 @@ class MainScreen extends Component {
     },
   };
 
+  onTextChanged = (e) => {
+    const value = e.target.value;
+    let updatedArray = [];
+    const regex = new RegExp(`^${value}`, "i");
+    updatedArray = this.state.universities.sort().filter((v) => regex.test(v));
+    this.setState({
+      suggestion: updatedArray,
+      text: value,
+    });
+  };
+
   fetchUniversities = (name) => {
-    const searchURL = `http://universities.hipolabs.com/search?name=${name}/update.json`;
+    const searchURL = `http://universities.hipolabs.com/search?name=${name}`;
     axios
       .get(searchURL)
       .then((res) => {
         console.log(res.data);
+        this.setState({
+          universities: res.data,
+          loading: false,
+        });
       })
       .catch((err) => console.log(err));
   };
@@ -88,10 +104,19 @@ class MainScreen extends Component {
     //   suggestion: updatedArray,
     //   text: value,
     // });
-    this.setState({
-      text: e.target.value,
-    });
-    this.fetchUniversities(e.target.value);
+
+    if (!e.target.value) {
+      this.setState({
+        text: e.target.value,
+      });
+    } else {
+      this.setState(
+        {
+          text: e.target.value,
+        },
+        this.fetchUniversities(e.target.value)
+      );
+    }
   };
 
   suggestionSelected = (value) => {
@@ -117,6 +142,20 @@ class MainScreen extends Component {
     );
   };
 
+  renderSuggestion2 = () => {
+    const { universities } = this.state;
+    if (universities.length === 0) {
+      return null;
+    }
+    return (
+      <ul>
+        {universities.map((univer) => (
+          <li key={univer.name}>{univer.name}</li>
+        ))}
+      </ul>
+    );
+  };
+
   onInputChanged = (e, inputIdentity) => {
     const updatedOrderForm = {
       ...this.state.orderForm,
@@ -137,26 +176,6 @@ class MainScreen extends Component {
 
   render() {
     const { text } = this.state;
-    const formElementsArray = [];
-    for (let key in this.state.orderForm) {
-      formElementsArray.push({
-        id: key,
-        config: this.state.orderForm[key],
-      });
-    }
-
-    let input = (
-      <form>
-        {formElementsArray.map((formElement) => (
-          <input
-            key={formElement.id}
-            type={formElement.config.elementType}
-            value={formElement.config.value}
-            onChange={(event) => this.onInputChanged(event, formElement.id)}
-          />
-        ))}
-      </form>
-    );
 
     return (
       <div>
@@ -170,9 +189,15 @@ class MainScreen extends Component {
           value={text}
           onChange={this.onAutoTextChanged}
         />
-        <div>{input}</div>
 
-        <div>{this.renderSuggestions()}</div>
+        <Modal
+          orderForm={this.state.orderForm}
+          open={this.state.modal}
+          close={this.openAndCloseModal}
+          onChanged={this.onInputChanged}
+        />
+
+        <div>{this.renderSuggestion2()}</div>
       </div>
     );
   }
