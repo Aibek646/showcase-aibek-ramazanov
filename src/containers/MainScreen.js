@@ -164,7 +164,8 @@ class MainScreen extends Component {
     for (let key in this.state.orderForm) {
       this.state.orderForm[key].value = "";
     }
-    this.setState({ modal: !this.state.modal, text: "", universities: [] });
+    this.setState({ modal: !this.state.modal, text: "" });
+    this.props.onClose();
   };
 
   render() {
@@ -198,6 +199,7 @@ class MainScreen extends Component {
               close={this.openAndCloseModal}
               onChanged={this.onInputChanged}
               add={this.createEducationalList}
+              loading={this.props.loading}
             />
 
             {this.state.educations.map((education) => (
@@ -223,6 +225,7 @@ const mapStateToProps = (state) => {
     name: state.homeScreen.name,
     universities: state.mainScreen.universities,
     text: state.mainScreen.text,
+    loading: state.mainScreen.loading,
   };
 };
 
@@ -232,6 +235,7 @@ const mapDispatchToProps = (dispatch) => {
     onSelectName: (text) => dispatch(actions.selectUniversity(text)),
     onNotChangeInput: (text) => dispatch(actions.inputNotChanges(text)),
     onChangeInput: (text) => dispatch(actions.inputChanges(text)),
+    onClose: () => dispatch(actions.closeButton()),
   };
 };
 

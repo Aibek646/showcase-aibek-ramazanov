@@ -4,4 +4,5 @@ export {
   selectUniversity,
   inputNotChanges,
   inputChanges,
+  closeButton,
 } from "./mainScreen";

@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "react-modal";
 import "./Modal.css";
 import { DebounceInput } from "react-debounce-input";
+import Loader from "./loader.gif";
 Modal.setAppElement("#root");
 
 const modal = (props) => {
@@ -49,6 +50,7 @@ const modal = (props) => {
         <button className="modal-btn" onClick={props.close}>
           Close
         </button>
+
         <div className="debounce-input">
           <DebounceInput
             debounceTimeout={500}
@@ -58,7 +60,13 @@ const modal = (props) => {
           />
         </div>
 
-        <div className="suggestion">{props.renderSuggestion2}</div>
+        <div className="suggestion">
+          {!props.loading ? (
+            props.renderSuggestion2
+          ) : (
+            <img src={Loader} alt="Loader gif" />
+          )}
+        </div>
         {input}
 
         <button onClick={props.add} className="add-btn">

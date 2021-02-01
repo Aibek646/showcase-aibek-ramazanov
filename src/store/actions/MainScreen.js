@@ -36,6 +36,12 @@ export const inputChanges = (text) => {
   };
 };
 
+export const closeButton = () => {
+  return {
+    type: actionTypes.CLOSE_BUTTON,
+  };
+};
+
 export const fetchUniversities = (name) => {
   return (dispatch) => {
     axios

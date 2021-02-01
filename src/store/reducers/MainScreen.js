@@ -40,6 +40,13 @@ const reducer = (state = initialState, action) => {
         text: action.text,
         loading: true,
       };
+
+    case actionTypes.CLOSE_BUTTON:
+      return {
+        ...state,
+        text: "",
+        universities: [],
+      };
     default:
       return state;
   }
