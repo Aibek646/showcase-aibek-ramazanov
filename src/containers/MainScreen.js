@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
+import * as actions from "../store/actions/index";
 import Modal from "../components/UI/Modal";
 import "./MainScreen.css";
-import EducationalList from "../components/education";
-import education from "../components/education";
 
 class MainScreen extends Component {
   state = {
@@ -125,7 +124,8 @@ class MainScreen extends Component {
         {
           text: e.target.value,
         },
-        this.fetchUniversities(e.target.value)
+        // this.fetchUniversities(e.target.value)
+        this.props.onFetchUniversities(e.target.value)
       );
     }
   };
@@ -236,4 +236,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(MainScreen);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchUniversities: (name) => dispatch(actions.fetchUniversities(name)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

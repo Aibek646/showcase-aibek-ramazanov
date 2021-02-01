@@ -1,25 +1,30 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
 
-export const setUniversities = (name) => {
+export const setUniversities = (universities, message) => {
   return {
     type: actionTypes.SET_UNIVERSITIES,
-    name: name,
+    universities: universities,
+    message: message,
   };
 };
 
-export const fetchFailedUniversities = () => {
+export const fetchFailedUniversities = (message) => {
   return {
     type: actionTypes.FAILED_FETCHED_UNIVERSITIES,
   };
 };
 
-export const fetchUniversities = () => {
+export const fetchUniversities = (name) => {
   return (dispatch) => {
     axios
-      .get("#")
+      .get(`http://universities.hipolabs.com/search?name=${name}`)
       .then((res) => {
-        dispatch(setUniversities(res.data));
+        const resultNotFoundMsg = !res.data.length
+          ? "There are no more search results. Please try again"
+          : "";
+        console.log(res.data);
+        dispatch(setUniversities(res.data, resultNotFoundMsg));
       })
       .catch((err) => dispatch(fetchFailedUniversities()));
   };
