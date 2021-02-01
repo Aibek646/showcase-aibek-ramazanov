@@ -49,14 +49,21 @@ const modal = (props) => {
         <button className="modal-btn" onClick={props.close}>
           Close
         </button>
-        <DebounceInput
-          debounceTimeout={500}
-          type="text"
-          value={props.text}
-          onChange={props.onAutoTextChanged}
-        />
-        <div>{props.renderSuggestion2()}</div>
+        <div className="debounce-input">
+          <DebounceInput
+            debounceTimeout={500}
+            type="text"
+            value={props.text}
+            onChange={props.onAutoTextChanged}
+          />
+        </div>
+
+        <div className="suggestion">{props.renderSuggestion2}</div>
         {input}
+
+        <button onClick={props.add} className="add-btn">
+          ADD
+        </button>
       </Modal>
     </div>
   );

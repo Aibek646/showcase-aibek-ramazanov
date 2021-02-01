@@ -22,4 +22,37 @@
   justify-content: center;
   align-items: center;
   justify-content: center;
+  margin: 0;
+}
+
+.debounce-input {
+  display: flex;
+  justify-content: center;
+}
+
+.debounce-input input {
+  padding: 10px;
+  width: 30%;
+  margin: 5px;
+}
+
+.suggestion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.add-btn {
+  width: 33%;
+  align-self: center;
+  padding: 10px;
+  cursor: pointer;
+  color: black;
+}
+
+.add-btn:hover {
+  background-color: darkolivegreen;
+  transition: 0.3s ease-in;
+  color: bisque;
 }

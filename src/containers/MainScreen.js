@@ -9,6 +9,7 @@ import "./MainScreen.css";
 class MainScreen extends Component {
   state = {
     universities: [],
+    education: [],
     suggestion: [],
     text: "",
     message: "",
@@ -64,6 +65,17 @@ class MainScreen extends Component {
         value: "",
       },
     },
+  };
+
+  createEducationalList = () => {
+    const { education } = this.state;
+    const university = this.state.text;
+    for (let key in this.state.orderForm) {
+      education.push({
+        value: this.state.orderForm[key].value,
+      });
+    }
+    console.log(education);
   };
 
   fetchUniversities = (name) => {
@@ -156,7 +168,7 @@ class MainScreen extends Component {
   };
 
   openAndCloseModal = () => {
-    this.setState({ modal: !this.state.modal });
+    this.setState({ modal: !this.state.modal, text: "" });
   };
 
   render() {
@@ -168,20 +180,16 @@ class MainScreen extends Component {
         <button onClick={this.openAndCloseModal}>Add new education</button>
 
         <br />
-        <DebounceInput
-          debounceTimeout={500}
-          type="text"
-          value={text}
-          onChange={this.onAutoTextChanged}
-        />
 
         <Modal
-          text={this.state.text}
-          renderSuggestion2={this.renderSuggestion2}
+          text={text}
+          renderSuggestion2={this.renderSuggestion2()}
+          onAutoTextChanged={this.onAutoTextChanged}
           orderForm={this.state.orderForm}
           open={this.state.modal}
           close={this.openAndCloseModal}
           onChanged={this.onInputChanged}
+          add={this.createEducationalList}
         />
 
         <div>{this.renderSuggestion2()}</div>
