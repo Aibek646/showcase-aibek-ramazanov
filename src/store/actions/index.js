@@ -1,2 +1,7 @@
 export { addName } from "./homeScreen";
-export { fetchUniversities } from "./mainScreen";
+export {
+  fetchUniversities,
+  selectUniversity,
+  inputNotChanges,
+  inputChanges,
+} from "./mainScreen";

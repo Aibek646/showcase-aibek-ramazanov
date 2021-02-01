@@ -15,6 +15,27 @@ export const fetchFailedUniversities = (message) => {
   };
 };
 
+export const selectUniversity = (value) => {
+  return {
+    type: actionTypes.SELECT_UNIVERSITY,
+    text: value,
+  };
+};
+
+export const inputNotChanges = (text) => {
+  return {
+    type: actionTypes.INPUT_NOT_CHANGES,
+    text: text,
+  };
+};
+
+export const inputChanges = (text) => {
+  return {
+    type: actionTypes.INPUT_CHANGES,
+    text: text,
+  };
+};
+
 export const fetchUniversities = (name) => {
   return (dispatch) => {
     axios

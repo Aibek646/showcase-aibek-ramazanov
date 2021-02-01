@@ -5,6 +5,7 @@ const initialState = {
   universities: [],
   loading: false,
   message: "",
+  text: "",
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,6 +21,24 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+      };
+    case actionTypes.SELECT_UNIVERSITY:
+      return {
+        ...state,
+        universities: [],
+        text: action.text,
+      };
+    case actionTypes.INPUT_NOT_CHANGES:
+      return {
+        ...state,
+        universities: [],
+        text: action.text,
+      };
+    case actionTypes.INPUT_CHANGES:
+      return {
+        ...state,
+        text: action.text,
+        loading: true,
       };
     default:
       return state;

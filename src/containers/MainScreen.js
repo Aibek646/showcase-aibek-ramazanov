@@ -7,11 +7,8 @@ import "./MainScreen.css";
 
 class MainScreen extends Component {
   state = {
-    universities: [],
     educations: [],
     suggestion: [],
-    text: "",
-    message: "",
     loading: false,
     modal: false,
     orderForm: {
@@ -68,7 +65,7 @@ class MainScreen extends Component {
 
   createEducationalList = () => {
     const { educations } = this.state;
-    const university = this.state.text;
+    const university = this.props.text;
 
     educations.push({
       degree: this.state.orderForm.degree.value,
@@ -114,24 +111,15 @@ class MainScreen extends Component {
 
   onAutoTextChanged = (e) => {
     if (!e.target.value) {
-      this.setState({
-        text: e.target.value,
-        universities: [],
-        message: "",
-      });
+      this.props.onNotChangeInput(e.target.value);
     } else {
-      this.setState(
-        {
-          text: e.target.value,
-        },
-        // this.fetchUniversities(e.target.value)
-        this.props.onFetchUniversities(e.target.value)
-      );
+      this.props.onChangeInput(e.target.value);
+      this.props.onFetchUniversities(e.target.value);
     }
   };
 
   renderSuggestion2 = () => {
-    const { universities } = this.state;
+    const { universities } = this.props;
     if (universities.length === 0) {
       return null;
     }
@@ -140,7 +128,7 @@ class MainScreen extends Component {
         {universities.map((univer) => (
           <li
             onClick={() => {
-              this.selectUniversity(univer.name);
+              this.props.onSelectName(univer.name);
             }}
             key={univer.id}
           >
@@ -152,10 +140,10 @@ class MainScreen extends Component {
   };
 
   selectUniversity = (value) => {
-    this.setState({
-      text: value,
-      universities: [],
-    });
+    // this.setState({
+    //   text: value,
+    //   universities: [],
+    // });
   };
 
   onInputChanged = (e, inputIdentity) => {
@@ -180,7 +168,7 @@ class MainScreen extends Component {
   };
 
   render() {
-    const { text } = this.state;
+    const { text } = this.props;
 
     return (
       <div>
@@ -233,12 +221,17 @@ class MainScreen extends Component {
 const mapStateToProps = (state) => {
   return {
     name: state.homeScreen.name,
+    universities: state.mainScreen.universities,
+    text: state.mainScreen.text,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onFetchUniversities: (name) => dispatch(actions.fetchUniversities(name)),
+    onSelectName: (text) => dispatch(actions.selectUniversity(text)),
+    onNotChangeInput: (text) => dispatch(actions.inputNotChanges(text)),
+    onChangeInput: (text) => dispatch(actions.inputChanges(text)),
   };
 };
 
