@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import * as actions from "../store/actions/index";
 import { connect } from "react-redux";
+import "./HomeScreen.css";
 
 class HomeScreen extends Component {
   onNameEntered = (e) => {
@@ -13,7 +13,7 @@ class HomeScreen extends Component {
 
   render() {
     return (
-      <div>
+      <div className="main-page">
         <h1>Hi there! Welcome to your education showcase</h1>
         <h1>Type your name and click "Enter" below to begin!</h1>
         <input onChange={this.onNameEntered} placeholder="Your Name" />

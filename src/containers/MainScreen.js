@@ -4,11 +4,12 @@ import axios from "axios";
 import Modal from "../components/UI/Modal";
 import "./MainScreen.css";
 import EducationalList from "../components/education";
+import education from "../components/education";
 
 class MainScreen extends Component {
   state = {
     universities: [],
-    education: [],
+    educations: [],
     suggestion: [],
     text: "",
     message: "",
@@ -67,19 +68,22 @@ class MainScreen extends Component {
   };
 
   createEducationalList = () => {
-    const { education } = this.state;
+    const { educations } = this.state;
     const university = this.state.text;
-    for (let key in this.state.orderForm) {
-      education.push({
-        value: this.state.orderForm[key].value,
-      });
-    }
-    education.push({
+
+    educations.push({
+      degree: this.state.orderForm.degree.value,
+      fieldOfStudy: this.state.orderForm.fieldOfStudy.value,
+      startYear: this.state.orderForm.startYear.value,
+      endYear: this.state.orderForm.endYear.value,
+      grade: this.state.orderForm.grade.value,
+      description: this.state.orderForm.description.value,
       university: university,
     });
+
     this.setState(
       {
-        education: education,
+        educations: educations,
       },
       this.openAndCloseModal
     );
@@ -126,13 +130,6 @@ class MainScreen extends Component {
     }
   };
 
-  suggestionSelected = (value) => {
-    this.setState({
-      text: value,
-      suggestion: [],
-    });
-  };
-
   renderSuggestion2 = () => {
     const { universities } = this.state;
     if (universities.length === 0) {
@@ -176,36 +173,57 @@ class MainScreen extends Component {
   };
 
   openAndCloseModal = () => {
-    this.setState({ modal: !this.state.modal, text: "" });
+    for (let key in this.state.orderForm) {
+      this.state.orderForm[key].value = "";
+    }
+    this.setState({ modal: !this.state.modal, text: "", universities: [] });
   };
 
   render() {
     const { text } = this.state;
 
     return (
-      <div className="container">
+      <div>
         <h1>Welcome {this.props.name} to educational page</h1>
-        <button onClick={this.openAndCloseModal}>Add new education</button>
+        <button className="btn-add-education" onClick={this.openAndCloseModal}>
+          Add new education
+        </button>
 
         <br />
 
-        <Modal
-          text={text}
-          renderSuggestion2={this.renderSuggestion2()}
-          onAutoTextChanged={this.onAutoTextChanged}
-          orderForm={this.state.orderForm}
-          open={this.state.modal}
-          close={this.openAndCloseModal}
-          onChanged={this.onInputChanged}
-          add={this.createEducationalList}
-        />
-        <div className="educational-modal">
-          {this.state.education.map((modal) => (
-            <div>
-              <p>{modal.value}</p>
-              <p>{modal.university}</p>
-            </div>
-          ))}
+        <div className="big-container">
+          <div className="container-1">
+            {this.state.educations.map((education) => (
+              <ul>
+                <li>{education.university}</li>
+              </ul>
+            ))}
+          </div>
+
+          <div className="container-2">
+            <Modal
+              text={text}
+              renderSuggestion2={this.renderSuggestion2()}
+              onAutoTextChanged={this.onAutoTextChanged}
+              orderForm={this.state.orderForm}
+              open={this.state.modal}
+              close={this.openAndCloseModal}
+              onChanged={this.onInputChanged}
+              add={this.createEducationalList}
+            />
+
+            {this.state.educations.map((education) => (
+              <div className="educational-modal">
+                <p style={{ fontSize: "20px" }}>{education.university}</p>
+                <p>{education.degree}</p>
+                <p>{education.description}</p>
+                <p>{education.fieldOfStudy}</p>
+                <p>{education.grade}</p>
+                <p>{education.startYear}</p>
+                <p>{education.endYear}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );

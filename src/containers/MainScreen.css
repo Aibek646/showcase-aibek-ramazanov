@@ -1,8 +1,43 @@
-.container {
+.big-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.container-1 {
   margin: 36px auto;
   max-width: 500px;
-  border: red 1px solid;
+
   height: 100vh;
   display: flex;
   flex-direction: column;
+  font-size: 20px;
+}
+
+.container-2 {
+  margin: 36px auto;
+  max-width: 500px;
+
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.educational-modal {
+  background-color: burlywood;
+
+  margin-top: 20px;
+}
+
+.btn-add-education {
+  padding: 10px;
+  width: 20%;
+  align-self: center;
+  background-color: burlywood;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-add-education:hover {
+  background-color: rgb(187, 164, 133);
+  transition: 0.3s ease-in;
 }

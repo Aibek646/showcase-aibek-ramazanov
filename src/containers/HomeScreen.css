@@ -1,0 +1,26 @@
+.main-page {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-page input {
+  padding: 10px;
+  margin-bottom: 5px;
+  font-style: italic;
+}
+
+.main-page button {
+  padding: 5px;
+  width: 60px;
+  background-color: lightblue;
+  border: none;
+  cursor: pointer;
+}
+
+.main-page button:hover {
+  background-color: rgb(109, 150, 163);
+  transition: 0.3s ease-in;
+}
