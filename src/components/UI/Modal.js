@@ -33,16 +33,18 @@ const modal = (props) => {
       <Modal
         isOpen={props.open}
         style={{
-          overlay: {
-            backgroundColor: "grey",
-          },
+          overlay: {},
           content: {
             display: "flex",
             flexDirection: "column",
-
             color: "orange",
-            width: "50%",
-            height: "50%",
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            width: "60%",
           },
         }}
       >
