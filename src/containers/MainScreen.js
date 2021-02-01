@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
-import { DebounceInput } from "react-debounce-input";
-import { compose } from "redux";
 import Modal from "../components/UI/Modal";
 import "./MainScreen.css";
+import EducationalList from "../components/education";
 
 class MainScreen extends Component {
   state = {
@@ -75,7 +74,16 @@ class MainScreen extends Component {
         value: this.state.orderForm[key].value,
       });
     }
-    console.log(education);
+    education.push({
+      university: university,
+    });
+    this.setState(
+      {
+        education: education,
+      },
+      this.openAndCloseModal
+    );
+    console.log(this.state.education);
   };
 
   fetchUniversities = (name) => {
@@ -191,8 +199,14 @@ class MainScreen extends Component {
           onChanged={this.onInputChanged}
           add={this.createEducationalList}
         />
-
-        <div>{this.renderSuggestion2()}</div>
+        <div className="educational-modal">
+          {this.state.education.map((modal) => (
+            <div>
+              <p>{modal.value}</p>
+              <p>{modal.university}</p>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

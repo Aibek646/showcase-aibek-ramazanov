@@ -1,15 +1,15 @@
 import React from "react";
 
-const education = () => {
+const education = (props) => {
   return (
     <div>
-      <h1>Graduate Computer Science Harvard University</h1>
-      <p>Degree</p>
-      <p>Field of study</p>
-      <p>Start year</p>
-      <p>End year</p>
-      <p>Grade</p>
-      <p>Description</p>
+      <h1>{props.education}</h1>
+      <p>{props.degree}</p>
+      <p>{props.fieldOfStudy}</p>
+      <p>{props.startYear}</p>
+      <p>{props.endYear}</p>
+      <p>{props.grade}</p>
+      <p>{props.description}</p>
     </div>
   );
 };
