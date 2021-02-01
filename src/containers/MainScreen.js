@@ -65,29 +65,38 @@ class MainScreen extends Component {
     },
   };
 
-  onTextChanged = (e) => {
-    const value = e.target.value;
-    let updatedArray = [];
-    const regex = new RegExp(`^${value}`, "i");
-    updatedArray = this.state.universities.sort().filter((v) => regex.test(v));
-    this.setState({
-      suggestion: updatedArray,
-      text: value,
-    });
-  };
+  // onTextChanged = (e) => {
+  //   const value = e.target.value;
+  //   let updatedArray = [];
+  //   const regex = new RegExp(`^${value}`, "i");
+  //   updatedArray = this.state.universities.sort().filter((v) => regex.test(v));
+  //   this.setState({
+  //     suggestion: updatedArray,
+  //     text: value,
+  //   });
+  // };
 
   fetchUniversities = (name) => {
     const searchURL = `http://universities.hipolabs.com/search?name=${name}`;
     axios
       .get(searchURL)
       .then((res) => {
+        const resultNotFoundMsg = !res.data.length
+          ? "There are no more search results. Please try again"
+          : "";
         console.log(res.data);
         this.setState({
           universities: res.data,
           loading: false,
+          message: resultNotFoundMsg,
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.setState({
+          loading: false,
+          message: "Failed to fetch the data. Please check network",
+        });
+      });
   };
 
   onAutoTextChanged = (e) => {
@@ -108,6 +117,8 @@ class MainScreen extends Component {
     if (!e.target.value) {
       this.setState({
         text: e.target.value,
+        universities: [],
+        message: "",
       });
     } else {
       this.setState(
@@ -126,22 +137,6 @@ class MainScreen extends Component {
     });
   };
 
-  renderSuggestions = () => {
-    const { suggestion } = this.state;
-    if (suggestion.length === 0) {
-      return null;
-    }
-    return (
-      <ul>
-        {suggestion.map((univer) => (
-          <li key={univer} onClick={() => this.suggestionSelected(univer)}>
-            {univer}
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
   renderSuggestion2 = () => {
     const { universities } = this.state;
     if (universities.length === 0) {
@@ -150,10 +145,24 @@ class MainScreen extends Component {
     return (
       <ul>
         {universities.map((univer) => (
-          <li key={univer.name}>{univer.name}</li>
+          <li
+            onClick={() => {
+              this.selectUniversity(univer.name);
+            }}
+            key={univer.id}
+          >
+            {univer.name}
+          </li>
         ))}
       </ul>
     );
+  };
+
+  selectUniversity = (value) => {
+    this.setState({
+      text: value,
+      universities: [],
+    });
   };
 
   onInputChanged = (e, inputIdentity) => {
